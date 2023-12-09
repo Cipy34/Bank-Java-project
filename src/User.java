@@ -19,4 +19,12 @@ public class User {
     void setPassword(String password_){
         password = password_;
     }
+
+    String getUser(){
+        return user;
+    }
+
+    String getPassword(){
+        return password;
+    }
 }
