@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.channels.NonReadableChannelException;
 
 public class Main {
     public static void AccountInit(Account[] a, User[] u){
@@ -20,14 +21,17 @@ public class Main {
         u[4] = new User("IBecali2", "123", a[4].getId());
     }
 
-    public static int Login(User[] u, int nraccounts) throws IOException {
+    public static int Login(Account[] a, User[] u, int nraccounts, String bank_name) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.print("Username: ");
         String user = reader.readLine();
 
         int index = -1, ok = 0;
 
         for(int i = 0; i < nraccounts; i++){
-            if(u[i].getUser().equals(user)) {
+            if(u[i].getUser().equals(user)&&
+                    a[i].getBank_name().equals(bank_name)) {
                 index = i;
                 ok = 1;
                 break;
@@ -35,27 +39,83 @@ public class Main {
         }
 
         if(ok == 1){
+            System.out.print("Password: ");
             String password = reader.readLine();
             if(password.equals(u[index].getPassword()))
                 return index;
-            else
+            else{
+                System.out.println("Incorrect password");
                 return -1;
+            }
+
         }
-        else
-            return -1;
+
+        System.out.println("Incorrect user");
+        return -1;
+    }
+
+    public static void MenuText(int choice){
+        if(choice == 0){
+            System.out.println("0 - Exit");
+            System.out.println("1 - Log-in");
+            System.out.println("2 - Register");
+            return;
+        }
+
+        if(choice == 1){
+            System.out.println("Select account bank: ");
+            System.out.println("0 - Exit");
+            System.out.println("1 - Banca Comerciala Romana");
+            System.out.println("2 - Banca Transilvania");
+            System.out.println("3 - Cec Bank");
+            System.out.println("4 - Libra Bank");
+            return;
+        }
+
+        if(choice == 2){
+            System.out.println("0 - Exit");
+            System.out.println("1 - Log-out");
+            System.out.println("2 - Deposit");
+            System.out.println("3 - Withdraw");
+            System.out.println("4 - Transfer");
+            System.out.println("5 - Delete account");
+            return;
+        }
     }
     public static void main(String[] args) throws IOException {
-        int nraccounts = 5, index;
+        MenuText(0);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int mainchoice = Integer.parseInt(reader.readLine());
+
+        if(mainchoice != 0){
+            MenuText(1);
+        }
+        else return;
+
+        int index = -1, nraccounts = 5;
+        String bank_name = "";
         Account[] a = new Account[nraccounts];
         User[] u = new User[nraccounts];
         AccountInit(a, u);
-        index = Login(u, nraccounts);
-        if(index != -1)
-            System.out.println("Log-in accepted");
-        else
-            System.out.println("Log-ind denied");
 
-        System.out.println(a[index].getBalance());
+        if(mainchoice == 1) {
+            mainchoice = Integer.parseInt(reader.readLine());
+            if (mainchoice == 1) {
+                bank_name = "Banca Comerciala Romana";
+            } else if (mainchoice == 2) {
+                bank_name = "Banca Transilvania";
+            } else if (mainchoice == 3) {
+                bank_name = "Cec Bank";
+            } else if (mainchoice == 4) {
+                bank_name = "Libra Bank";
+            }
 
+            index = Login(a, u, nraccounts, bank_name);
+        }
+
+        if(index == -1)
+            return;
+
+        System.out.println(a[index].getFirst_name());
     }
 }
