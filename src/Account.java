@@ -2,12 +2,11 @@ public class Account {
     private String first_name, last_name, iban, bank_name;
     private double balance;
     private int account_id;
-    private static int generalId = 100, nraccounts = 0;
+    private static int generalId = 100;
 
     public Account(){
         balance = 0;
         account_id = generalId++;
-        nraccounts++;
     }
 
     public Account(String first_name_, String last_name_, String bank_name_, double balance_){
@@ -16,7 +15,6 @@ public class Account {
         bank_name = bank_name_;
         balance = balance_;
         account_id = generalId++;
-        nraccounts++;
 
         if(bank_name_.equals("Banca Comerciala Romana")){
             iban = "BCR" + account_id;
@@ -34,6 +32,10 @@ public class Account {
     void setBalance(double balance_){
         balance = balance_;
     }
+
+    void setFirst_name(String first_name_){ first_name = first_name_; }
+
+    void setLast_name(String last_name_){last_name = last_name_; }
 
     int getId(){
         return account_id;
@@ -59,9 +61,11 @@ public class Account {
         return balance;
     }
 
-    int getNraccounts(){ return nraccounts; }
+    void DepositMoney(int amount){
+        balance += amount;
+    }
 
-    void delete(){
-        nraccounts--;
+    void WithdrawMoney(int amount){
+        balance -= amount;
     }
 }

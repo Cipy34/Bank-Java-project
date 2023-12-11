@@ -18,19 +18,20 @@ public class Main {
         u[3] = new User("IBecali", "123", a[3].getId());
 
         a[4] = new Account("Ioan", "Becali", "Cec Bank", 60500000);
-        u[4] = new User("IBecali2", "123", a[4].getId());
+        u[4] = new User("IBecali", "123", a[4].getId());
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        
-        int index = -1;
+
         Account[] a = new Account[5];
         User[] u = new User[5];
+        Transaction[] t = new Transaction[0];
         Menu m = new Menu();
 
         AccountInit(a, u);
-        m.Start(a, u, a[0].getNraccounts());
+        m.Start(a, u, t);
+
 
     }
 }

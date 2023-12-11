@@ -1,13 +1,20 @@
 public class Transaction {
     private final String iban;
-    private final int account_id;
+    private String details;
+    private int account_id;
     private final float amount;
-    private int commision;
 
-    public Transaction(String iban_, int account_id_, float amount_){
+    public Transaction(String iban_, int account_id_, float amount_, String details_){
         iban = iban_;
         account_id = account_id_;
         amount = amount_;
+        details = details_;
+    }
+
+    public Transaction(String iban_, float amount_, String details_){
+        iban = iban_;
+        amount = amount_;
+        details = details_;
     }
 
     String getIban(){
@@ -22,7 +29,5 @@ public class Transaction {
         return amount;
     }
 
-    int getCommision(){
-        return commision;
-    }
+    String getDetails(){ return details; }
 }
