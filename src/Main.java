@@ -21,45 +21,16 @@ public class Main {
         u[4] = new User("IBecali2", "123", a[4].getId());
     }
 
-    public static Account[] NewAccount(Account[] a, int nraccounts){
-        Account[] newA = new Account[nraccounts];
-        System.arraycopy(a, 0, newA, 0, a.length);
-        return newA;
-    }
-
-    public static User[] NewUser(User[] u, int nraccounts){
-        User[] newU = new User[nraccounts];
-        System.arraycopy(u, 0, newU, 0, u.length);
-        return newU;
-    }
-
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        int index;
-        int nraccounts = 5;
-        Account[] a = new Account[nraccounts];
-        User[] u = new User[nraccounts];
-
-        AccountInit(a, u);
+        
+        int index = -1;
+        Account[] a = new Account[5];
+        User[] u = new User[5];
         Menu m = new Menu();
 
-        int mainchoice = Integer.parseInt(reader.readLine());
-        switch(mainchoice){
-            case 0:
-                return;
-
-            case 1:
-                index = m.Login(a, u, nraccounts);
-                if(index == -1)
-                    return;
-            case 2:
-                nraccounts++;
-                a = NewAccount(a, nraccounts);
-                u = NewUser(u, nraccounts);
-
-                m.Register(a, u, nraccounts-1);
-        }
+        AccountInit(a, u);
+        m.Start(a, u, a[0].getNraccounts());
 
     }
 }
