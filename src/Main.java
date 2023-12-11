@@ -113,6 +113,50 @@ public class Main {
             index = Login(a, u, nraccounts, bank_name);
         }
 
+        if(mainchoice == 2) {
+            mainchoice = Integer.parseInt(reader.readLine());
+
+            if (nraccounts == a.length) {
+                int newLength = a.length + 1;
+
+                Account[] newA = new Account[newLength];
+                User[] newU = new User[newLength];
+
+                System.arraycopy(a, 0, newA, 0, a.length);
+                System.arraycopy(u, 0, newU, 0, u.length);
+
+                a = newA;
+                u = newU;
+            }
+
+            if (mainchoice == 1) {
+                bank_name = "Banca Comerciala Romana";
+            } else if (mainchoice == 2) {
+                bank_name = "Banca Transilvania";
+            } else if (mainchoice == 3) {
+                bank_name = "Cec Bank";
+            } else if (mainchoice == 4) {
+                bank_name = "Libra Bank";
+            }
+
+            System.out.println("First name: ");
+            String f_name = reader.readLine();
+
+            System.out.println("Last name: ");
+            String l_name = reader.readLine();
+
+            System.out.println("User name: ");
+            String u_name = reader.readLine();
+
+            System.out.println("Password: ");
+            String password = reader.readLine();
+
+            a[nraccounts] = new Account(f_name, l_name, bank_name, 0);
+            u[nraccounts] = new User(u_name, password, a[nraccounts].getId());
+            nraccounts++;
+            index = nraccounts-1;
+        }
+
         if(index == -1)
             return;
 
