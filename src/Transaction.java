@@ -2,7 +2,12 @@ public class Transaction {
     private final String iban;
     private String details;
     private int account_id;
-    private final float amount;
+    private float amount;
+
+    public Transaction(){
+        iban = null;
+        account_id = 0;
+    }
 
     public Transaction(String iban_, int account_id_, float amount_, String details_){
         iban = iban_;

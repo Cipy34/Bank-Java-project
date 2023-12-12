@@ -27,13 +27,25 @@ public class Menu {
         System.out.println("3 - Withdraw");
         System.out.println("4 - Transfer");
         System.out.println("5 - Personal informations");
-        System.out.println("6 - Settings");
+        System.out.println("6 - Transactions history");
+        System.out.println("7 - Settings");
     }
 
     public void TextSettings(){
         System.out.println("0 - Exit");
         System.out.println("1 - Change personal informations");
         System.out.println("2 - Delete account");
+    }
+
+    public void TextAdmin(){
+        System.out.println("0 - Exit");
+        System.out.println("1 - Return");
+        System.out.println("2 - Display all accounts");
+        System.out.println("3 - Search a specific account");
+        System.out.println("4 - Display all transactions");
+        System.out.println("5 - Search a specific transaction");
+        System.out.println("6 - Change personal informations to a specific account");
+        System.out.println("7 - Delete an account");
     }
 
     public int Login(Account a[], User u[]) throws IOException {
@@ -159,6 +171,10 @@ public class Menu {
                 Register(a, u);
                 System.out.println("Your account has been registered");
                 break;
+
+            case 3:
+                
+                return;
         }
 
         if(index == -1)
@@ -174,6 +190,9 @@ public class Menu {
         return newT;
     }
 
+    public void Deposit(Account[] a, User[] u, Transaction[] t, int index){
+
+    }
     public void Settings(Account[] a, User[] u, Transaction[] t, int index) throws IOException{
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         TextSettings();
@@ -231,6 +250,7 @@ public class Menu {
                     aux = reader.readLine();
 
                     u[index].setPassword(aux);
+                    break;
                 }
 
             case 2:
@@ -243,6 +263,7 @@ public class Menu {
                     a[index] = null;
                     u[index] = null;
                 }
+                break;
 
         }
     }
@@ -293,7 +314,6 @@ public class Menu {
                             if(a[i].getIban().equals(iban))
                                 a[i].DepositMoney(amount);
                 }
-
                 break;
 
             case 3:
@@ -342,6 +362,12 @@ public class Menu {
                 break;
 
             case 6:
+                for(int i = 0; i < t.length; i++)
+                    if(t[i].getIban().equals(a[index].getIban()) || t[i].getAccount_id() == a[index].getId())
+                        System.out.println(t[i].getDetails());
+                break;
+
+            case 7:
                 Settings(a, u, t, index);
         }
 
