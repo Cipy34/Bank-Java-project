@@ -44,8 +44,7 @@ public class Menu {
         System.out.println("3 - Search a specific account");
         System.out.println("4 - Display all transactions");
         System.out.println("5 - Search a specific transaction");
-        System.out.println("6 - Change personal informations to a specific account");
-        System.out.println("7 - Delete an account");
+        System.out.println("6 - Settings for a specific account");
     }
 
     public int Login(Account a[], User u[]) throws IOException {
@@ -173,7 +172,7 @@ public class Menu {
                 break;
 
             case 3:
-                
+                Admin(a, u, t);
                 return;
         }
 
@@ -190,9 +189,6 @@ public class Menu {
         return newT;
     }
 
-    public void Deposit(Account[] a, User[] u, Transaction[] t, int index){
-
-    }
     public void Settings(Account[] a, User[] u, Transaction[] t, int index) throws IOException{
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         TextSettings();
@@ -325,7 +321,7 @@ public class Menu {
                     a[index].WithdrawMoney(amount);
 
                     t = newTransaction(t);
-                    t[t.length - 1] = new Transaction(iban, amount, "Withdrawn " + amount + " on " + LocalDateTime.now());
+                    t[t.length - 1] = new Transaction(iban, amount, "Withdrawn " + amount + " from " + a[index].getId() + " on " + LocalDateTime.now());
                 }
                 else
                     System.out.println("Insufficent fonds");
@@ -348,7 +344,7 @@ public class Menu {
 
                     t = newTransaction(t);
                     t[t.length - 1] = new Transaction(iban, a[index].getId(), amount,
-                            "Transfered " + amount + " to " + iban + " on " + LocalDateTime.now());
+                            "Transfered " + amount + " to " + iban + " from " + a[index].getId() + " on " + LocalDateTime.now());
                 }
                 else
                     System.out.println("Insufficent fonds");
@@ -381,5 +377,112 @@ public class Menu {
             Options(a, u, t, index);
     }
 
+    public void Admin(Account[] a, User[] u, Transaction[] t) throws IOException{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+        TextAdmin();
+        int adminchoice = Integer.parseInt(reader.readLine());
+
+        switch (adminchoice){
+            case 0:
+                return;
+
+            case 1:
+                Start(a, u, t);
+                break;
+
+            case 2:
+                for(int i = 0; i < a.length; i++){
+                    System.out.println(a[i].getFirst_name() + " " + a[i].getLast_name());
+                    System.out.println("Balance: " + a[i].getBalance());
+                    System.out.println("Iban: " + a[i].getIban());
+                    System.out.println("Account id: " + a[i].getId() + "\n");
+                }
+                break;
+
+            case 3:
+                String filterstring = "";
+                int filterint = -1;
+
+                System.out.println("By what do you want to filter?");
+                System.out.println("0 - First name");
+                System.out.println("1 - Last name");
+                System.out.println("2 - Iban");
+                System.out.println("3 - Account id");
+                System.out.println("4 - Balance");
+
+
+                adminchoice = Integer.parseInt(reader.readLine());
+                System.out.println("Filter: ");
+
+                if(adminchoice >= 3)
+                    filterint = Integer.parseInt(reader.readLine());
+                else
+                    filterstring = reader.readLine();
+
+                for(int i = 0; i < a.length; i++){
+                    if(a[i].getFirst_name().equals(filterstring) ||
+                    a[i].getLast_name().equals(filterstring) ||
+                    a[i].getIban().equals(filterstring) ||
+                    a[i].getId() == filterint ||
+                    a[i].getBalance() == filterint){
+                        System.out.println(a[i].getFirst_name() + " " + a[i].getLast_name());
+                        System.out.println("Balance: " + a[i].getBalance());
+                        System.out.println("Iban: " + a[i].getIban());
+                        System.out.println("Account id: " + a[i].getId());
+                        System.out.println("\n");
+                    }
+
+                }
+                break;
+
+            case 4:
+                for(int i = 0; i < t.length; i++)
+                    System.out.println(t[i].getDetails());
+                break;
+
+            case 5:
+                filterint = 0;
+                filterstring = null;
+
+                System.out.println("By what do you want to filter?");
+                System.out.println("1 - Iban");
+                System.out.println("2 - Account id");
+                System.out.println("3 - Amount");
+
+
+                adminchoice = Integer.parseInt(reader.readLine());
+                System.out.println("Filter: ");
+
+                if(adminchoice >= 2)
+                    filterint = Integer.parseInt(reader.readLine());
+                else
+                    filterstring = reader.readLine();
+
+                for(int i = 0; i < t.length; i++){
+                    if(t[i].getIban().equals(filterstring) ||
+                    t[i].getAccount_id() == filterint ||
+                    t[i].getAmount() == filterint)
+                        System.out.println(t[i].getDetails());
+                }
+                break;
+
+            case 6:
+                System.out.println("Account id: ");
+                filterint = Integer.parseInt(reader.readLine());
+
+                for (int i = 0; i < a.length; i++)
+                    if(a[i].getId() == filterint)
+                        Settings(a, u, t, i);
+        }
+
+        System.out.println("Do you want to make another transaction?");
+        System.out.println("0 - No");
+        System.out.println("1 - Yes");
+
+        adminchoice = Integer.parseInt(reader.readLine());
+
+        if(adminchoice == 1)
+            Start(a, u, t);
+    }
 }
